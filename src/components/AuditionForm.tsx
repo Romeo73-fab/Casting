@@ -97,8 +97,10 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
     
     if (formData.age === '' || formData.age === undefined) {
       newErrors.age = "L'âge est obligatoire.";
-    } else if (Number(formData.age) < 12 || Number(formData.age) > 85) {
-      newErrors.age = "Veuillez saisir un âge valide (entre 12 et 85 ans).";
+    } else if (Number(formData.age) < 20) {
+      newErrors.age = "L'âge minimum requis pour s'inscrire est de 20 ans.";
+    } else if (Number(formData.age) > 85) {
+      newErrors.age = "Veuillez saisir un âge valide (inférieur à 85 ans).";
     }
 
     if (!formData.cityAddress.trim()) {
@@ -197,24 +199,16 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
       {/* Form Header Card */}
       <div className="rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-sm mb-6">
         <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left gap-4 border-b border-slate-100 pb-5">
-          <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-3.5 sm:gap-4 w-full sm:w-auto">
-            <img
-              src="/logo.jpg"
-              alt="Logo Officiel Casting"
-              className="mx-auto h-20 w-auto max-w-[140px] sm:h-20 sm:max-w-[140px] rounded-xl object-contain bg-white border border-slate-200/80 shadow-xs p-1 shrink-0"
-              referrerPolicy="no-referrer"
-            />
-            <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-              <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 border border-indigo-100 mb-1.5">
-                Session d'audition Soirée des Restaurés 2026
-              </span>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-                JF &amp; Les Adorateur du Tabernacle Casting
-              </h1>
-              <p className="mt-0.5 text-xs sm:text-sm text-slate-500">
-                Formulaire officiel d'inscription et de sélection vocale.
-              </p>
-            </div>
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left w-full sm:w-auto">
+            <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 border border-indigo-100 mb-1.5">
+              Session d'audition Soirée des Restaurés 2026
+            </span>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+              JF &amp; Les Adorateur du Tabernacle Casting
+            </h1>
+            <p className="mt-0.5 text-xs sm:text-sm text-slate-500">
+              Formulaire officiel d'inscription et de sélection vocale.
+            </p>
           </div>
 
           <div className="flex items-center justify-center gap-2 self-center sm:self-center shrink-0">
@@ -270,7 +264,7 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
           <div className="rounded-xl bg-amber-50/90 border border-amber-200/90 p-3 sm:p-3.5 text-xs text-amber-950 flex items-start gap-2.5">
             <Info className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              <strong className="font-bold text-amber-900">NB :</strong> Cette audition est destinée aux personnes nées de nouveau ayant déjà une bonne maîtrise vocale. La ponctualité et la disponibilité pour les répétitions sont indispensables.
+              <strong className="font-bold text-amber-900">NB :</strong> Cette audition est destinée aux personnes nées de nouveau et ayant déjà une bonne maîtrise vocale. La ponctualité et la disponibilité pour les répétitions sont indispensables.
             </p>
           </div>
         </div>
@@ -395,9 +389,9 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
                 <input
                   type="number"
                   id="input-candidate-age"
-                  min="12"
+                  min="20"
                   max="99"
-                  placeholder=""
+                  placeholder="ex: 22"
                   value={formData.age}
                   onChange={(e) => handleInputChange('age', e.target.value ? Number(e.target.value) : '')}
                   className={`w-full sm:w-36 rounded-xl border px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 ${
@@ -406,7 +400,7 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
                       : 'border-slate-300 focus:border-indigo-500 focus:ring-indigo-100'
                   }`}
                 />
-                <span className="mt-1 block text-[11px] text-slate-400">Âge en années</span>
+                <span className="mt-1 block text-[11px] text-slate-500 font-medium">Âge minimum requis : 20 ans</span>
                 {errors.age && <p className="text-[11px] text-rose-600 mt-0.5">{errors.age}</p>}
               </div>
 

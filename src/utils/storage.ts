@@ -109,6 +109,22 @@ export function getStoredCandidates(): VoiceCandidate[] {
   }
 }
 
+export async function fetchCandidatesFromServer(): Promise<VoiceCandidate[]> {
+  try {
+    const res = await fetch('/api/candidates');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        localStorage.setItem(STORAGE_KEY, encryptData(data));
+        return data;
+      }
+    }
+  } catch (err) {
+    console.warn('Erreur synchronisation serveur candidates:', err);
+  }
+  return getStoredCandidates();
+}
+
 export function saveCandidate(candidate: VoiceCandidate): void {
   const list = getStoredCandidates();
   const existingIdx = list.findIndex((c) => c.id === candidate.id);
@@ -118,6 +134,13 @@ export function saveCandidate(candidate: VoiceCandidate): void {
     list.unshift(candidate);
   }
   localStorage.setItem(STORAGE_KEY, encryptData(list));
+
+  // Sync with backend API
+  fetch('/api/candidates', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(candidate),
+  }).catch((err) => console.warn('Could not post candidate to server:', err));
 }
 
 export function updateCandidateJury(
@@ -130,12 +153,25 @@ export function updateCandidateJury(
 
   Object.assign(candidate, updates);
   localStorage.setItem(STORAGE_KEY, encryptData(list));
+
+  // Sync with backend API
+  fetch(`/api/candidates/${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates),
+  }).catch((err) => console.warn('Could not patch candidate on server:', err));
+
   return candidate;
 }
 
 export function deleteCandidate(id: string): void {
   const list = getStoredCandidates().filter((c) => c.id !== id);
   localStorage.setItem(STORAGE_KEY, encryptData(list));
+
+  // Sync with backend API
+  fetch(`/api/candidates/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  }).catch((err) => console.warn('Could not delete candidate on server:', err));
 }
 
 export function saveDraft(values: CandidateFormValues): void {

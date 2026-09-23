@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { VoiceCandidate } from './types';
-import { getStoredCandidates } from './utils/storage';
+import { getStoredCandidates, fetchCandidatesFromServer } from './utils/storage';
 import { Header } from './components/Header';
 import { AuditionForm } from './components/AuditionForm';
 import { SubmissionSuccess } from './components/SubmissionSuccess';
 import { AdminJuryDashboard } from './components/AdminJuryDashboard';
 import { AdminLogin } from './components/AdminLogin';
-import worshipBg from './assets/images/soiree_restaures_bg_1790167495274.jpg';
+import bggImage from './assets/images/bgg.jpeg';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'form' | 'jury' | 'success'>('form');
@@ -16,20 +16,35 @@ export default function App() {
     return typeof window !== 'undefined' && sessionStorage.getItem('jfat_jury_auth') === 'true';
   });
 
-  // Load candidates into memory ONLY when admin session is verified
-  useEffect(() => {
+  const syncCandidates = useCallback(async () => {
     if (isAdminAuthenticated) {
-      const list = getStoredCandidates();
-      setCandidates(list);
-    } else {
-      setCandidates([]);
+      const serverList = await fetchCandidatesFromServer();
+      setCandidates(serverList);
     }
   }, [isAdminAuthenticated]);
 
+  // Load candidates into memory and set up real-time polling across all devices
+  useEffect(() => {
+    if (!isAdminAuthenticated) {
+      setCandidates([]);
+      return;
+    }
+
+    // Initial load from local cache then immediate fetch from server
+    setCandidates(getStoredCandidates());
+    syncCandidates();
+
+    // Live sync polling every 3 seconds so all jurors see changes & registrations in real time
+    const interval = setInterval(() => {
+      syncCandidates();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isAdminAuthenticated, syncCandidates]);
+
   const refreshCandidates = () => {
     if (isAdminAuthenticated) {
-      const list = getStoredCandidates();
-      setCandidates([...list]);
+      syncCandidates();
     }
   };
 
@@ -54,21 +69,18 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-200 flex flex-col font-sans text-slate-900 selection:bg-indigo-600 selection:text-white">
+    <div className="relative min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 selection:bg-indigo-600 selection:text-white overflow-x-hidden">
       
-      {/* Background concert adoration / worship atmosphere */}
+      {/* Fixed static background layer rendered clearer and brighter */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat"
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat opacity-55"
         style={{ 
-          backgroundImage: `url(${worshipBg})`,
-          filter: 'contrast(1.05) saturate(1.15) brightness(0.92)',
+          backgroundImage: `url(${bggImage})`,
+          filter: 'brightness(1.14) contrast(1.03)',
+          transform: 'translate3d(0, 0, 0)',
+          WebkitTransform: 'translate3d(0, 0, 0)',
+          willChange: 'transform',
         }}
-        aria-hidden="true"
-      />
-
-      {/* Atmospheric overlay balancing readability and the spiritual concert ambiance */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-slate-900/40 via-slate-900/25 to-slate-900/50 backdrop-blur-[0.5px]"
         aria-hidden="true"
       />
 

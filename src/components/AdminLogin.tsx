@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, KeyRound, ArrowLeft, AlertCircle, ShieldCheck, Clock } from 'lucide-react';
+import { Mail, KeyRound, ArrowLeft, AlertCircle, ShieldCheck, Clock, Lock } from 'lucide-react';
 import { verifyAdminCredentials } from '../utils/crypto';
 
 interface AdminLoginProps {
@@ -72,18 +72,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
       
       <div className="rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-6 sm:p-8 shadow-xl">
         
-        {/* Header Logo */}
-        <div className="mx-auto mb-4 flex justify-center">
-          <img
-            src="/logo.jpg"
-            alt="Logo Officiel Casting"
-            className="h-20 w-auto max-w-[160px] rounded-xl object-contain bg-white shadow-sm border border-slate-200/90 p-1"
-            referrerPolicy="no-referrer"
-          />
-        </div>
-
         {/* Title requested by user */}
         <div className="text-center mb-6">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100">
+            <Lock className="h-6 w-6" />
+          </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
             Espace réservé au Jury
           </h2>
