@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { 
   CheckCircle2, 
-  Printer, 
-  PlusCircle
+  Download, 
+  Send,
+  PlusCircle,
+  MailCheck
 } from 'lucide-react';
 import { VoiceCandidate } from '../types';
 
@@ -15,12 +17,69 @@ interface SubmissionSuccessProps {
 export const SubmissionSuccess: React.FC<SubmissionSuccessProps> = ({
   candidate,
   onNewSubmission,
-  onViewJury,
 }) => {
   const printRef = useRef<HTMLDivElement>(null);
+  const [hasClickedDownload, setHasClickedDownload] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<string | null>(null);
 
-  const handlePrint = () => {
-    window.print();
+  const sendEmailReceipt = () => {
+    const subject = `Récépissé Officiel - Casting Soirée des Restaurés 2026 - Dossier N° ${candidate.registrationNumber}`;
+    const body = `Bonjour ${candidate.firstName} ${candidate.lastName},
+
+Voici votre confirmation officielle d'inscription pour l'audition :
+
+══════════════════════════════════════════
+RÉCÉPISSÉ D'AUDITION OFFICIEL
+SOIRÉE DES RESTAURÉS 2026
+JF & Les Adorateurs du Tabernacle
+══════════════════════════════════════════
+
+• Numéro de dossier : ${candidate.registrationNumber}
+• Nom & Prénom : ${candidate.lastName.toUpperCase()} ${candidate.firstName}
+• Téléphone : ${candidate.phoneCountryCode} ${candidate.phone}
+• Email : ${candidate.email}
+• Église de provenance : ${candidate.churchCommunity}
+• Pasteur référent : ${candidate.pastorName} (${candidate.pastorPhone})
+
+DATE & HORAIRE DE L'AUDITION :
+• Date : Samedi 03 Octobre 2026
+• Heure de passage : 10H00
+
+Important : Veuillez conserver ce récépissé et présenter votre numéro de dossier lors de votre audition.
+
+Cordialement,
+Le Comité d'Audition & Sélection Vocale
+JF & Les Adorateurs du Tabernacle`;
+
+    const mailtoUrl = `mailto:${encodeURIComponent(candidate.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open mail client to send
+    const link = document.createElement('a');
+    link.href = mailtoUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setEmailStatus(`Récépissé envoyé par mail à ${candidate.email}`);
+  };
+
+  const handleAction = () => {
+    if (!hasClickedDownload) {
+      // First click on "Télécharger le récépissé":
+      // 1. Send by email to the candidate's email
+      sendEmailReceipt();
+      // 2. Open print / download dialog
+      setTimeout(() => {
+        window.print();
+      }, 300);
+      // 3. Transform button into "Envoyer"
+      setHasClickedDownload(true);
+    } else {
+      // Button is now "Envoyer": re-send or trigger mail send
+      sendEmailReceipt();
+    }
   };
 
   return (
@@ -65,18 +124,39 @@ export const SubmissionSuccess: React.FC<SubmissionSuccessProps> = ({
               {candidate.registrationNumber}
             </span>
           </div>
+
+          {/* Notification status if sent */}
+          {emailStatus && (
+            <div className="mt-4 mx-auto max-w-md rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-xs text-emerald-800 flex items-center justify-center gap-2">
+              <MailCheck className="h-4 w-4 text-emerald-600 shrink-0" />
+              <span>{emailStatus}</span>
+            </div>
+          )}
         </div>
 
         {/* Action Buttons */}
         <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             type="button"
-            id="btn-print-receipt"
-            onClick={handlePrint}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer"
+            id="btn-receipt-action"
+            onClick={handleAction}
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-xs font-semibold shadow-xs transition-all cursor-pointer ${
+              hasClickedDownload
+                ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+            }`}
           >
-            <Printer className="h-4 w-4 text-slate-500" />
-            Imprimer / Télécharger le récépissé
+            {hasClickedDownload ? (
+              <>
+                <Send className="h-4 w-4" />
+                <span>Envoyer</span>
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4 text-slate-500" />
+                <span>Télécharger le récépissé</span>
+              </>
+            )}
           </button>
 
           <button

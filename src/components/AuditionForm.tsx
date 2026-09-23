@@ -270,7 +270,7 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
           <div className="rounded-xl bg-amber-50/90 border border-amber-200/90 p-3 sm:p-3.5 text-xs text-amber-950 flex items-start gap-2.5">
             <Info className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              <strong className="font-bold text-amber-900">NB :</strong> Cette audition est destinée aux personnes ayant déjà une bonne maîtrise vocale. La ponctualité et la disponibilité pour les répétitions sont indispensables.
+              <strong className="font-bold text-amber-900">NB :</strong> Cette audition est destinée aux personnes nées de nouveau ayant déjà une bonne maîtrise vocale. La ponctualité et la disponibilité pour les répétitions sont indispensables.
             </p>
           </div>
         </div>
@@ -633,15 +633,12 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
                   { id: 'tenor', label: 'Ténor', sub: 'Voix aiguë homme' },
                   { id: 'baryton', label: 'Baryton', sub: 'Voix médium homme' },
                   { id: 'basse', label: 'Basse', sub: 'Voix grave homme' },
-                  { id: 'voix_off_femme', label: 'Voix off (Femme)', sub: 'Narration & Doublage' },
-                  { id: 'voix_off_homme', label: 'Voix off (Homme)', sub: 'Narration & Doublage' },
-                  { id: 'autre', label: 'Autre / Indécis', sub: 'À déterminer lors du test' },
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => handleInputChange('vocalRange', item.id as VocalRange)}
-                    className={`rounded-xl border p-3 text-left transition-all ${
+                    className={`rounded-xl border p-3 text-left transition-all cursor-pointer ${
                       formData.vocalRange === item.id
                         ? 'border-indigo-600 bg-indigo-50/80 ring-2 ring-indigo-200'
                         : 'border-slate-200 hover:border-slate-300 bg-white'

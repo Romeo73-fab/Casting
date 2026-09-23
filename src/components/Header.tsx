@@ -77,9 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <Lock className="h-3.5 w-3.5 text-slate-500" />
               )}
               <span>Jury</span>
-              <span className="ml-0.5 sm:ml-1 inline-flex items-center justify-center rounded-full bg-indigo-100 px-1.5 py-0.2 text-[10px] font-bold text-indigo-700">
-                {candidateCount}
-              </span>
             </button>
           </div>
 

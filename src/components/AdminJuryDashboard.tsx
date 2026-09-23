@@ -121,26 +121,29 @@ export const AdminJuryDashboard: React.FC<AdminJuryDashboardProps> = ({
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       
-      {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
+      {/* Top Banner Card */}
+      <div className="rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-5 sm:p-6 shadow-sm mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex items-center gap-3.5">
           <img
             src="/logo.jpg"
             alt="Logo Officiel Casting"
-            className="h-12 w-auto max-w-[100px] rounded-lg object-contain bg-white border border-slate-200/90 shadow-2xs p-0.5 shrink-0"
+            className="h-14 w-auto max-w-[110px] rounded-xl object-contain bg-white border border-slate-200/90 shadow-2xs p-1 shrink-0"
             referrerPolicy="no-referrer"
           />
           <div>
+            <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-700 border border-indigo-100 mb-1">
+              Session d'audition Soirée des Restaurés 2026
+            </span>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
               Espace Jury &amp; Gestion des Auditions
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-600 mt-0.5 leading-relaxed max-w-xl">
               Évaluez les profils vocaux, notez les candidats du casting et exportez les convocations officielles.
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           {onLogout && (
             <button
               type="button"
@@ -220,8 +223,6 @@ export const AdminJuryDashboard: React.FC<AdminJuryDashboardProps> = ({
             <option value="tenor">Ténor</option>
             <option value="baryton">Baryton</option>
             <option value="basse">Basse</option>
-            <option value="voix_off_femme">Voix off femme</option>
-            <option value="voix_off_homme">Voix off homme</option>
           </select>
 
           {/* Status Filter */}

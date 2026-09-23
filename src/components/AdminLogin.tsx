@@ -85,7 +85,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         {/* Title requested by user */}
         <div className="text-center mb-6">
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            Espace réserver au Jury
+            Espace réservé au Jury
           </h2>
           <p className="mt-1 text-xs text-slate-500">
             Portail d'évaluation et de sélection des candidatures vocales.

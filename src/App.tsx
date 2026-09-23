@@ -6,7 +6,7 @@ import { AuditionForm } from './components/AuditionForm';
 import { SubmissionSuccess } from './components/SubmissionSuccess';
 import { AdminJuryDashboard } from './components/AdminJuryDashboard';
 import { AdminLogin } from './components/AdminLogin';
-import micBg from './assets/images/studio_mic_light_bg_1790091868717.jpg';
+import worshipBg from './assets/images/soiree_restaures_bg_1790167495274.jpg';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'form' | 'jury' | 'success'>('form');
@@ -56,19 +56,19 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-slate-200 flex flex-col font-sans text-slate-900 selection:bg-indigo-600 selection:text-white">
       
-      {/* Background microphone casting studio (clearly visible and beautiful) */}
+      {/* Background concert adoration / worship atmosphere */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url(${micBg})`,
-          filter: 'contrast(1.08) saturate(1.15)',
+          backgroundImage: `url(${worshipBg})`,
+          filter: 'contrast(1.05) saturate(1.15) brightness(0.92)',
         }}
         aria-hidden="true"
       />
 
-      {/* Translucent overlay providing contrast while keeping the microphone distinctly visible */}
+      {/* Atmospheric overlay balancing readability and the spiritual concert ambiance */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-slate-300/65 via-slate-200/55 to-slate-300/75 backdrop-blur-[0.5px]"
+        className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-b from-slate-900/40 via-slate-900/25 to-slate-900/50 backdrop-blur-[0.5px]"
         aria-hidden="true"
       />
 
@@ -131,7 +131,7 @@ export default function App() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">JF &amp; Les Adorateur du Tabernacle Casting</span>
-            <span>— Plateforme Officielle de Recrutement Vocal &amp; Chorale</span>
+            <span>— Plateforme Officielle de Recrutement Vocal</span>
           </div>
 
           <div className="flex items-center gap-5 text-slate-500 text-xs">
