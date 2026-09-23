@@ -103,7 +103,8 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
                 type="email"
                 id="input-jury-email"
                 required
-                placeholder="admincasting@gmail.com"
+                placeholder=""
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-slate-300 pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 transition-colors"
