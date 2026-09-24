@@ -6,7 +6,6 @@ import {
   Mail, 
   Church, 
   Music, 
-  Save, 
   RotateCcw, 
   Send, 
   Check,
@@ -197,45 +196,21 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 relative z-10">
       
       {/* Form Header Card */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-sm mb-6">
-        <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left gap-4 border-b border-slate-100 pb-5">
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left w-full sm:w-auto">
-            <span className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 border border-indigo-100 mb-1.5">
-              Session d'audition Soirée des Restaurés 2026
-            </span>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-              JF &amp; Les Adorateur du Tabernacle Casting
-            </h1>
-            <p className="mt-0.5 text-xs sm:text-sm text-slate-500">
-              Formulaire officiel d'inscription et de sélection vocale.
-            </p>
-          </div>
-
-          <div className="flex items-center justify-center gap-2 self-center sm:self-center shrink-0">
-            <button
-              type="button"
-              id="btn-save-draft-header"
-              onClick={handleManualSaveDraft}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
-            >
-              <Save className="h-3.5 w-3.5 text-indigo-600" />
-              Enregistrer le brouillon
-            </button>
-          </div>
+      <div className="rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-sm mb-6 text-center">
+        <div className="flex flex-col items-center justify-center text-center border-b border-slate-100 pb-5">
+          <span className="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 border border-indigo-100 mb-2">
+            Session d'audition Soirée des Restaurés 2026
+          </span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight text-center">
+            Formulaire officiel d'inscription
+          </h1>
         </div>
 
         {/* ========================================================
             ANNONCE OFFICIELLE D'AUDITION
             ======================================================== */}
-        <div className="mt-5 rounded-2xl border border-indigo-100 bg-gradient-to-b from-indigo-50/70 via-white to-slate-50/70 p-5 sm:p-6 text-slate-800 shadow-2xs space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl sm:text-2xl" role="img" aria-label="microphone">🎙️</span>
-            <h2 className="text-base sm:text-lg font-black tracking-tight text-indigo-950 uppercase">
-              AUDITION – LES ADORATEURS DU TABERNACLE
-            </h2>
-          </div>
-
-          <p className="text-sm sm:text-base font-bold text-indigo-900 leading-snug">
+        <div className="mt-5 rounded-2xl border border-indigo-100 bg-gradient-to-b from-indigo-50/70 via-white to-slate-50/70 p-5 sm:p-6 text-slate-800 shadow-2xs space-y-4 text-center">
+          <p className="text-base sm:text-lg font-bold text-indigo-900 leading-snug text-center max-w-2xl mx-auto">
             Tu maîtrises déjà le chant et tu souhaites mettre ta voix au service de Dieu ?
           </p>
 
@@ -745,26 +720,15 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
             Effacer toutes les réponses
           </button>
 
-          {/* Action buttons (Enregistrer + Submission) */}
+          {/* Action buttons (Submission) */}
           <div className="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2 justify-end">
             
-            {/* "Enregistrer" (Save Draft) */}
-            <button
-              type="button"
-              id="btn-save-draft"
-              onClick={handleManualSaveDraft}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 transition-colors"
-            >
-              <Save className="h-4 w-4 text-slate-500" />
-              Enregistrer
-            </button>
-
             {/* "Submission" / Soumettre ma candidature */}
             <button
               type="submit"
               id="btn-submit-candidature"
               disabled={isSubmitting}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-7 py-3 text-sm font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all disabled:opacity-50"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-8 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 active:scale-95 transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? (
                 <>

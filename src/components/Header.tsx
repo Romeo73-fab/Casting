@@ -28,16 +28,13 @@ export const Header: React.FC<HeaderProps> = ({
           />
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-slate-900 tracking-tight text-xs sm:text-base leading-tight block truncate sm:whitespace-normal">
-                JF &amp; Les Adorateur du Tabernacle Casting
+              <span className="font-extrabold text-slate-900 tracking-tight text-sm sm:text-base leading-tight block truncate">
+                JFAT Casting
               </span>
               <span className="hidden md:inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-700 border border-indigo-100/80 shrink-0">
                 Audition Officielle
               </span>
             </div>
-            <p className="text-[10px] sm:text-xs text-slate-500 leading-tight mt-0.5 truncate">
-              Formulaire de Recrutement &amp; Sélection Vocale
-            </p>
           </div>
         </div>
 
