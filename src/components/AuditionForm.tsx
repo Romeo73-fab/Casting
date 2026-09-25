@@ -201,7 +201,7 @@ export const AuditionForm: React.FC<AuditionFormProps> = ({ onSuccess }) => {
           <span className="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 border border-indigo-100 mb-2">
             Session d'audition Soirée des Restaurés 2026
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight text-center">
+          <h1 className="font-breathing text-3xl sm:text-4xl md:text-5xl text-slate-900 text-center py-1 tracking-normal font-normal">
             Formulaire officiel d'inscription
           </h1>
         </div>
